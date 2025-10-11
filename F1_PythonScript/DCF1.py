@@ -8,7 +8,7 @@ import re
 
 # --- 설정 부분 ---
 GALLERY_ID = 'formula1'
-START_PAGE = 10566
+START_PAGE = 10600
 # 수집할 시간 범위 설정 (3월 3일 00:00 ~ 02:00)
 SEARCH_START_TIME = datetime(2024, 3, 3, 0, 0, 0)
 SEARCH_END_TIME = datetime(2024, 3, 3, 2, 0, 0)
