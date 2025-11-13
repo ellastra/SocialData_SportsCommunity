@@ -65,7 +65,7 @@ def select_and_split_csv():
             selected_file = csv_files[choice - 1]
             file_path = os.path.join(lck_data_folder, selected_file)
             print(f"\n'{selected_file}' 파일을 분할합니다...")
-            split_csv_file(file_path, 3)
+            split_csv_file(file_path, 2)
         else:
             print("잘못된 번호입니다.")
     except ValueError:
