@@ -8,16 +8,16 @@ import re
 
 # --- 설정 부분 ---
 GALLERY_ID = 'formula1'
-START_PAGE = 10600
+START_PAGE = 7875
 # 수집할 시간 범위 설정 (3월 3일 00:00 ~ 02:00)
-SEARCH_START_TIME = datetime(2024, 3, 3, 0, 0, 0)
-SEARCH_END_TIME = datetime(2024, 3, 3, 2, 0, 0)
+SEARCH_START_TIME = datetime(2024, 11, 24, 15, 0, 0)
+SEARCH_END_TIME = datetime(2024, 11, 24, 17, 0, 0)
 # 크롤링을 중단할 날짜
-STOP_DATE = datetime(2024, 3, 4)
+STOP_DATE = datetime(2024, 11, 25)
 
-OUTPUT_DIR = '/Users/chohyunseo/Desktop/SocialData_SportsAnalysis'
+OUTPUT_DIR = '/Users/chohyunseo/Desktop/SocialData_SportsAnalysis/SocialData_SportsCommunity/CommunityData'
 # 수집 내용에 맞춰 파일 이름 변경
-FILENAME = 'f1_posts_title_and_body_240303_00-02h.csv'
+FILENAME = 'Community_Las_Vegas.csv'
 OUTPUT_FILENAME = os.path.join(OUTPUT_DIR, FILENAME)
 
 
