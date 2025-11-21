@@ -18,7 +18,7 @@ fastf1.Cache.enable_cache(CACHE_DIR)
 
 # 2. 데이터 가져올 세션 정의
 YEAR = 2024
-GRAND_PRIX = 'Abu Dhabi'
+GRAND_PRIX = 'Imola'
 SESSION_TYPE = 'R'  # 'R'은 Race
 
 # --- 📌 저장 경로 설정 ---
