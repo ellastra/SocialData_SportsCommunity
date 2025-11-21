@@ -1,68 +1,84 @@
 # -*- coding: utf-8 -*-
-"""
-OpenF1 API를 이용해 2024 Bahrain Grand Prix (Race)의 랩별 시작/종료 시각을 가져옵니다.
-기준 드라이버: Max Verstappen (driver_number=1)
-"""
-
-import requests
+import os
+import fastf1
 import pandas as pd
-from datetime import timedelta
 
-# --- 설정 ---
+
+# ---------------------------
+# CONFIGURATION
+# ---------------------------
 YEAR = 2024
-COUNTRY = "United Arab Emirates"
-SESSION_NAME = "Race"
-DRIVER_NUMBER = 55  # Max Verstappen
-BASE_URL = "https://api.openf1.org/v1"
+EVENT = "Abu Dhabi"          # e.g. "Abu Dhabi", "Monza", "Bahrain"
+SESSION = "R"                 # R = Race, Q = Qualifying, FP1/FP2/FP3
+DRIVER = "55"                 # Driver number as STRING ("55", "1", "44", etc.)
+
+# Output CSV path
+OUTPUT_CSV = (
+    "/Users/chohyunseo/Desktop/SocialData_SportsAnalysis/"
+    "SocialData_SportsCommunity/F1_RawData/uae_2024_laps.csv"
+)
+
+# Cache folder (must exist or we create it)
+CACHE_DIR = (
+    "/Users/chohyunseo/Desktop/SocialData_SportsAnalysis/"
+    "SocialData_SportsCommunity/fastf1_cache"
+)
 
 
-def get_session_key(year, country, session_name):
-    url = f"{BASE_URL}/sessions"
-    params = {"year": year, "country_name": country, "session_name": session_name}
-    r = requests.get(url, params=params)
-    r.raise_for_status()
-    data = r.json()
-    if not data:
-        raise RuntimeError(f"Session not found for {year} {country} {session_name}")
-    session_key = data[0]["session_key"]
-    print(f"[INFO] Session key: {session_key}")
-    return session_key
-
-
-def get_laps(session_key, driver_number):
-    url = f"{BASE_URL}/laps"
-    params = {"session_key": session_key, "driver_number": driver_number}
-    r = requests.get(url, params=params)
-    r.raise_for_status()
-    laps = pd.DataFrame(r.json())
-    if laps.empty:
-        raise RuntimeError("No lap data found for this driver.")
-    return laps
-
-
+# ---------------------------
+# MAIN SCRIPT
+# ---------------------------
 def main():
-    print(f"[INFO] Loading {YEAR} {COUNTRY} {SESSION_NAME} lap data from OpenF1...")
 
-    session_key = get_session_key(YEAR, COUNTRY, SESSION_NAME)
-    laps = get_laps(session_key, DRIVER_NUMBER)
+    # Ensure cache directory exists
+    os.makedirs(CACHE_DIR, exist_ok=True)
 
-    # 필요한 컬럼만 추출
-    df = laps[["lap_number", "date_start", "lap_duration"]].copy()
-    df["date_start"] = pd.to_datetime(df["date_start"], utc=True)
-    df["lap_duration"] = pd.to_timedelta(df["lap_duration"], unit="s")
-    df["date_end"] = df["date_start"] + df["lap_duration"]
+    # Enable FastF1 cache
+    fastf1.Cache.enable_cache(CACHE_DIR)
 
-    # KST 변환
-    df["lap_start_kst"] = df["date_start"].dt.tz_convert("Asia/Seoul")
-    df["lap_end_kst"] = df["date_end"].dt.tz_convert("Asia/Seoul")
+    print(f"[INFO] Loading {YEAR} {EVENT} ({SESSION}) via FastF1...")
 
-    # 정리
-    out = df[["lap_number", "lap_start_kst", "lap_end_kst"]].sort_values("lap_number")
-    print(out.to_string(index=False))
+    # Load session
+    session = fastf1.get_session(YEAR, EVENT, SESSION)
+    session.load()
 
-    # CSV로 저장
-    out.to_csv("/Users/chohyunseo/Desktop/SocialData_SportsAnalysis/SocialData_SportsCommunity/F1_RawData/uae_2024_laps_kst.csv", index=False, encoding="utf-8-sig")
-    print(f"\n✅ Saved ({len(out)} laps)")
+    print("[INFO] Session loaded successfully!")
 
+    # Filter laps for chosen driver
+    laps = session.laps.pick_driver(DRIVER)
+
+    if laps.empty:
+        print(f"[ERROR] No laps found for driver {DRIVER}")
+        return
+
+    print(f"[INFO] Found {len(laps)} laps for driver #{DRIVER}")
+
+    # Build DataFrame
+    df = pd.DataFrame({
+        "lap_number": laps["LapNumber"],
+        "lap_time_seconds": laps["LapTime"].dt.total_seconds(),
+        "sector1_seconds": laps["Sector1Time"].dt.total_seconds(),
+        "sector2_seconds": laps["Sector2Time"].dt.total_seconds(),
+        "sector3_seconds": laps["Sector3Time"].dt.total_seconds(),
+        "compound": laps["Compound"],
+        "fresh_tyre": laps["FreshTyre"],
+        "is_pit_out_lap": laps["PitOutLap"],
+        "is_pit_in_lap": laps["PitInLap"],
+        "is_valid_lap": laps["IsValid"],
+    })
+
+    # Save to CSV
+    df.to_csv(OUTPUT_CSV, index=False, encoding="utf-8-sig")
+
+    print(f"\n✅ CSV saved successfully!")
+    print(f"➡ Path: {OUTPUT_CSV}\n")
+
+    # Print first rows
+    print(df.head(10))
+
+
+# ---------------------------
+# RUN
+# ---------------------------
 if __name__ == "__main__":
     main()
