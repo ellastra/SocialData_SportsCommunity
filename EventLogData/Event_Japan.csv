@@ -1,0 +1,32 @@
+lap,event_description,domain_category,novelty,unexpectedness,outcome_relevance
+Start,Verstappen begins with lead,Race start,0,,
+1,Ricciardo crashes with Albon,Crash,,1,1
+1,Red flag,Red Flag,,0,0
+3,Race restarts,Race Resume,,0,0
+3,Leclerc overtakes Hamilton,Overtake,,0,0
+3,Gasly hits ocon,Contact,,0,0
+5,Russell overtakes Tsunoda,Overtake,,0,0
+5,Bottas overtakes Ocon,Overtake,,0,0
+13,Tsunoda overtakes Gasly,Overtake,,1,0
+14,Hamilton lets Russell through,In-team Swap,,0,1
+17,Norris overtakes Hamilton,Overtake,,0,0
+17,Perez overtakes Hamilton,Overtake,,0,0
+18,Norris overtakes Russell,Overtake,,0,0
+18,Perez overtakes Russell,Overtake,,0,0
+19,Sainz overtakes Hamilton,Overtake,,0,0
+21,Verstappen overtakes Leclerc,Overtake,,0,0
+21,Sainz overtakes Russell,Overtake,,0,0
+22,Perez overtakes Norris,Overtake,,0,0
+23,5 cars pit at the same time,Pit ,,1,0
+23,Tsunoda overtakes Ocon at the pit,Overtake,,0,1
+26,Perez overtakes Leclerc,Overtake,,1,1
+33,Tsunoda overtakes Hulkenberg,Overtake,,0,0
+37,Sargeant misses braking point,Out of Track,,0,0
+44,Sainz overtakes Norris,Overtake,,0,1
+46,Sainz overtakes Leclerc,Overtake,,0,0
+50,Piastri defends against Russell going out of track,Defends,,0,0
+53,Russell overtakes Piastri,Overtake,,0,1
+Finish,Race over,Race Finish,,,
+Finish,Verstappen 1st,Race 1st,0,,
+Finish,Perez 2nd,Race 2nd,0,,
+Finish,Sainz 3rd,Race 3rd,1,,

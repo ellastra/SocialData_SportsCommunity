@@ -1,0 +1,23 @@
+lap,event_description,domain_category,novelty,unexpectedness,outcome_relevance
+Start,Verstappen begins with lead,Race Start,0,,
+2,Sainz overtakes Verstappen,Overtake,,1,1
+4,Verstappen's car starts smoking,Mechanical Failure,,1,0
+5,Verstappen retires car due to break failure,Retire,,1,1
+17,Hamilton's car gets engine failure,Mechanical Failure,,0,0
+17,Hamilton retires car due to engine failure,Retire,,1,1
+17,Virtual Safety car deployed,Safety Car,,0,0
+18,Alonso pits during virtual safety car,Pit Success,,0,0
+21,Perez overtakes Russell,Overtake,,0,0
+27,Perez overtakes Alonso,Overtake,,0,0
+29,Piastri lets Norris through,In-team Swap,,0,0
+35,Leclerc defends agains Alonso & Perez,Defense,,0,1
+41,Piastri overtakes Alonso,Overtake,,0,0
+41,Gasly overtakes Tsunoda,Overtake,,0,0
+43,Magnussen tries to overtake Albon,Defense,,0,0
+45,Magnussen overtakes Albon,Overtake,,0,0
+58,Russell crashes,Crash,,1,1
+58,Virtual Safety car deployed,Safety Car,,0,0
+Finish,Race over,Race Finish,,,
+Finish,Sainz 1st,Race 1st,1,,
+Finish,Leclerc 2nd,Race 2nd,1,,
+Finish,Norris 3rd,Race 3rd,0,,
