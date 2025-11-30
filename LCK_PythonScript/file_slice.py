@@ -32,7 +32,7 @@ def split_csv_file(file_path, num_parts=3):
         chunk = df.iloc[start_idx:end_idx]
         
         # 새 파일명 생성
-        output_file = os.path.join(file_dir, f"{file_name}_part_{i+1}.csv")
+        output_file = os.path.join(file_dir, f"{file_name}_{i+1}.csv")
         
         # CSV 파일로 저장
         chunk.to_csv(output_file, index=False, encoding='utf-8-sig')
